@@ -9,18 +9,17 @@ from os import mkdir, path
 #from algobpy.parse import parse_params
 from pyteal import *
 
-
+# App.globalPut(Bytes("admin"), Bytes('')),
+# App.globalPut(Bytes("magic_numero"), Bytes('')),
+# App.globalPut(Bytes("winners"), Bytes('')),
 
 def clear_state_program():
-    is_admin = App.globalGet(Bytes("admin")) == Txn.sender()
+    # is_admin = App.globalGet(Bytes("admin")) == Txn.sender()
 
     program = Seq([
-        Assert(is_admin),
-        # App.globalPut(Bytes("admin"), Bytes('')),
-        # App.globalPut(Bytes("magic_numero"), Bytes('')),
-        # App.globalPut(Bytes("winners"), Bytes('')),
-        App.globalPut(Bytes("winner"), Bytes('')),
-        App.globalPut(Bytes("winner2"), Bytes('')),
+        # Assert(is_admin),
+        # App.globalPut(Bytes("winner"), Bytes('')),
+        # App.globalPut(Bytes("winner2"), Bytes('')),
 
         Return(Int(1))
     ])

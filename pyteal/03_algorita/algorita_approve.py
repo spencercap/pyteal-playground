@@ -40,9 +40,9 @@ def magic():
     #     Approve()
     # ])
 
-    set_winner = Seq([
+    set_winner_1 = Seq([
         Assert(is_admin),
-        App.globalPut(Bytes('winner'), Txn.accounts[1]),
+        App.globalPut(Bytes('winner1'), Txn.accounts[1]),
         Approve()
     ])
 
@@ -52,11 +52,18 @@ def magic():
         Approve()
     ])
 
+    set_winner_3 = Seq([
+        Assert(is_admin),
+        App.globalPut(Bytes('winner3'), Txn.accounts[1]),
+        Approve()
+    ])
+
+    # too lazy to figure out winners: Account[] global or proper close out code
     reset_winners = Seq([
         Assert(is_admin),
-        # App.globalDel()
-        App.globalPut(Bytes('winner'), Bytes('')),
-        App.globalPut(Bytes('winner2'), Bytes('')),
+        App.globalDel(Bytes('winner1')),
+        App.globalDel(Bytes('winner2')),
+        App.globalDel(Bytes('winner3')),
         Approve()
     ])
 
@@ -93,8 +100,9 @@ def magic():
         #     "award_winner"), award_winner],
         # [Txn.application_args[0] == Bytes(
         #     "set_winners"), set_winners]
-        [Txn.application_args[0] == Bytes("set_winner"), set_winner],
+        [Txn.application_args[0] == Bytes("set_winner_1"), set_winner_1],
         [Txn.application_args[0] == Bytes("set_winner_2"), set_winner_2],
+        [Txn.application_args[0] == Bytes("set_winner_3"), set_winner_3],
         [Txn.application_args[0] == Bytes("reset_winners"), reset_winners]
     )
 
