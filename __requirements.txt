@@ -1,0 +1,4 @@
+pyteal==0.10.1
+mypy==0.910
+black==21.7b0
+# -e git+https://github.com/algorand/pyteal-utils.git@main#egg=pyteal_utils
