@@ -87,11 +87,21 @@ async function verboseWaitForConfirmation(client, txnId) {
 const fs = require('fs');
 // import teal file
 const approvalTeal = fs.readFileSync('./approval.teal', 'utf8');
+const clearTeal = fs.readFileSync('./clear.teal', 'utf8');
 // console.log('approvalTeal', approvalTeal);
 
-async function getBasicProgramBytes(client) {
+async function getApproalBytes(client) {
+	return getBasicProgramBytes(client, approvalTeal);
+}
+
+async function getClearBytes(client) {
+	return getBasicProgramBytes(client, clearTeal);
+}
+
+async function getBasicProgramBytes(client, teal) {
 	// const program = '#pragma version 2\nint 1';
-	const program = approvalTeal;
+	// const program = approvalTeal;
+	const program = teal;
 
 	// use algod to compile the program
 	const compiledProgram = await client.compile(program).do();
@@ -136,8 +146,8 @@ async function main() {
 		// const from = sender.addr;
 		const from = myAccount.addr;
 		const onComplete = algosdk.OnApplicationComplete.NoOpOC;
-		const approvalProgram = await getBasicProgramBytes(algodClient);
-		const clearProgram = await getBasicProgramBytes(algodClient);
+		const approvalProgram = await getBasicProgramBytes(algodClient, approvalTeal);
+		const clearProgram = await getBasicProgramBytes(algodClient, clearTeal);
 		const numLocalInts = 0;
 		const numLocalByteSlices = 0;
 		const numGlobalInts = 1;
