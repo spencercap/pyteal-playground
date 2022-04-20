@@ -67,6 +67,38 @@ def magic():
         Approve()
     ])
 
+    set_amount_per_drop = Seq([
+        Assert(is_admin),
+        App.globalPut(Bytes('amount_per_drop'), Btoi(Txn.application_args[1])),
+        Approve()
+    ])
+
+    set_drop_id = Seq([
+        Assert(is_admin),
+        App.globalPut(Bytes('drop_id'), Btoi(Txn.application_args[1])),
+        Approve()
+    ])
+
+    # drop = Seq([
+    #     Approve()
+    # ])
+
+    # note that users must OPT IN to this contract to receive a drop
+    # we set a local val to mark them as unable to get more
+    drop = Seq([
+        Assert(App.localGet(Txn.sender(), Bytes('has_drop')) == Int(0)),
+        InnerTxnBuilder.Begin(),
+        InnerTxnBuilder.SetFields({
+            TxnField.type_enum: TxnType.AssetTransfer,
+            TxnField.xfer_asset: App.globalGet(Bytes("drop_id")),
+            TxnField.asset_amount: App.globalGet(Bytes("amount_per_drop")),
+            TxnField.asset_receiver: Txn.sender()
+        }),
+        InnerTxnBuilder.Submit(),
+        App.localPut(Txn.sender(), Bytes('has_drop'), Int(1)),
+        Approve()
+    ])
+
 
 
     # this expects caller to be admin and
@@ -103,7 +135,14 @@ def magic():
         [Txn.application_args[0] == Bytes("set_winner_1"), set_winner_1],
         [Txn.application_args[0] == Bytes("set_winner_2"), set_winner_2],
         [Txn.application_args[0] == Bytes("set_winner_3"), set_winner_3],
-        [Txn.application_args[0] == Bytes("reset_winners"), reset_winners]
+        [Txn.application_args[0] == Bytes("reset_winners"), reset_winners],
+        #
+        [Txn.application_args[0] == Bytes("set_amount_per_drop"), set_amount_per_drop],
+        [Txn.application_args[0] == Bytes("set_drop_id"), set_drop_id],
+        [Txn.application_args[0] == Bytes("drop"), drop]
+
+        # global byte vars = 6
+        # local bye vars = 1
     )
 
     return program
