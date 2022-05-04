@@ -2,14 +2,17 @@
 
 ## Development Setup
 
-This repo requires Python 3.6 or higher. We recommend you use a Python virtual environment to install
+This repo requires Python 3.10 or higher. We recommend you use a Python virtual environment to install
 the required dependencies.
 
-Set up venv (one time):
+Installing Python:
+- 	use `pyenv` to install + manage your global python version (use >3.10)
 
--   `python3 -m venv venv`
+Set up venv aka virtual environment (one time):
 
-Active venv:
+-   `python -m venv venv`
+
+Active venv (VSCode does this automatically if you open the project root):
 
 -   `. venv/bin/activate` (if your shell is bash/zsh)
 -   `. venv/bin/activate.fish` (if your shell is fish)
