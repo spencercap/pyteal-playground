@@ -67,6 +67,7 @@ class AbiMethodClass:
         ]
 
     def generateJsonDef():
+        # reference, one method of: https://github.com/algorand/smart-contracts/blob/master/devrel/ABI/demo-abi/contract.json
         print('TODO')
 
 
@@ -134,6 +135,9 @@ class AbiRouter:
         return handlers
 
     def generateJsonAbiSpec(self):
+        # reference: https://github.com/algorand/smart-contracts/blob/master/devrel/ABI/demo-abi/contract.json
+        # would still need to manually insert app ID for testnet + mainnet after JSON is saved
+        # ben@algo's router: https://github.com/algorand-devrel/demo-abi/blob/02765c87958e1a607e45df70d3cae4a0547828cc/contract.py#L166
         print('compile all method specs into single object + save as JSON')
 
     def add(self, abiClass: Type[AbiMethodClass]):
