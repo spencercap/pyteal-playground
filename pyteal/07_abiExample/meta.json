@@ -1,0 +1,14 @@
+{
+	"schema": {
+		"localInts": 4,
+		"localBytes": 12,
+		"globalInts": 1,
+		"globalBytes": 1
+	},
+	"appArgs": [],
+	"optionalFields": {
+		"accounts": [],
+		"assets": [],
+		"apps": []
+	}
+}
